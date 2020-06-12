@@ -15,7 +15,7 @@
     "@types/bootstrap": "^4.3.1",
     "@types/uuid": "^8.0.0",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "tesseract.js": "^2.0.2",
     "uuid": "^8.1.0"
   },
