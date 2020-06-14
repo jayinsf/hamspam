@@ -106,10 +106,10 @@ After creating child classes of AbstractEmail and AbstractView, add the child cl
 | Object | Tag | Description |
 |-|-|-|
 | `email` **(required)** | `name` - child class name of AbstractEmail<br>`hostname` - the host name of email service provider<br>`view` - child class name of AbstractView | Pairs of AbstractEmail, AbstractView and host name |
-| `sender-whitelist` | Array of email addresses | List of the trusted email addresses<br>Allow regular expressions <ul><li> _i.e._ `\*@\*.sfsu.edu` will whitelist all email addresses ending with "@sfsu.edu" and "@mail.sfsu.edu"</li></ul> |
-| `late-delivery` | `from (default: 300)` - start time of late delivery hours. Email was received late if delivery time is greater than this number<br>`to (default: 1320)` - end time of late delivery hours. Email was received late if delivery time is smaller than this number | Range of late night hours<br>Each hour since midnight is 60 <ul><li>_i.e._ 0=midnight, 720=noon, 540=9am, 930=3:30pm</li></ul> |
+| `sender-whitelist` | Array of email addresses | List of the trusted email addresses<br>Allow regular expressions <ul><li> _e.g._ `\*@\*.sfsu.edu` will whitelist all email addresses ending with "@sfsu.edu" and "@mail.sfsu.edu"</li></ul> |
+| `late-delivery` | `from (default: 300)` - start time of late delivery hours. Email was received late if delivery time is greater than this number<br>`to (default: 1320)` - end time of late delivery hours. Email was received late if delivery time is smaller than this number | Range of late night hours<br>Each hour since midnight is 60 <ul><li>_e.g._ 0=midnight, 720=noon, 540=9am, 930=3:30pm</li></ul> |
 | `suspicious-file-extensions` | Array of file extensions | List of file extensions |
-| `spam-words` | Array of spam words | List of spam words<br>Allow regular expressions <ul><li>_i.e._ `gift( card)?` flags "gift" and "gift card" as spam words</li></ul>Space between words matches strictly zero or more spaces <ul><li>_i.e._ `sign up` flags "sign &nbsp;up" (double spaces) and "signup" (no space) as spam word</li></ul> |
+| `spam-words` | Array of spam words | List of spam words<br>Allow regular expressions <ul><li>_e.g._ `gift( card)?` flags "gift" and "gift card" as spam words</li></ul>Space between words matches strictly zero or more spaces <ul><li>_e.g._ `sign up` flags "sign &nbsp;up" (double spaces) and "signup" (no space) as spam word</li></ul> |
 
 ## Issues and Contributions
 
