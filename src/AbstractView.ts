@@ -35,6 +35,7 @@ export class AbstractView {
     [AbstractEmail.MaliciousLinkType.NONSTANDARD_PORT]: 'It runs on non-standard port number like HTTPS over 80 or HTTP over 443',
     [AbstractEmail.MaliciousLinkType.REDIRECT]: 'It redirects to another page',
     [AbstractEmail.MaliciousLinkType.SPECIALCHAR]: 'It has special characters in the domain name of the URL',
+    [AbstractEmail.MaliciousLinkType.TOP_LEVEL_DOMAIN]: 'Top-level domain is shady',
     [AbstractEmail.MaliciousLinkType.FREE_HOSTING]: 'It is hosted on free web hosting providers'
   };
   public static readonly FILE_SECURE_TITLE : string = 'Safe File';

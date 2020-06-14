@@ -118,7 +118,7 @@ export abstract class AbstractEmail {
     //is shady top-level domain
     if (['work', 'live', 'buzz', 'tk', 'fit', 'top', 'cn', 'rest'].indexOf(anchor.hostname.split('.').pop()) > -1) {
       console.log('7');
-      result.push(AbstractEmail.MaliciousLinkType.IP_ADDRESS);
+      result.push(AbstractEmail.MaliciousLinkType.TOP_LEVEL_DOMAIN);
     }
     //hosted on free web hosting providers
     for (let webHostingService of ['weebly.com', 'cognitoforms.com', '0000webhostapp.com', 'jigsy.com', 'jotform.com']) {
@@ -379,6 +379,7 @@ export namespace AbstractEmail {
     AUTHENTICATION_CREDENTIAL,
     FILE,
     REDIRECT,
+    TOP_LEVEL_DOMAIN,
     FREE_HOSTING
   }
 }
