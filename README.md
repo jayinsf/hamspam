@@ -44,7 +44,7 @@ To scan emails with Hamspam on an email service, create two new classes that ext
 Microsoft Outlook:
 * AbstractEmail - [Outlook.ts](https://raw.githubusercontent.com/jayinsf/hamspam/master/src/Outlook.ts "Outlook.ts")
 * AbstractView - [OutlookView.ts](https://raw.githubusercontent.com/jayinsf/hamspam/master/src/OutlookView.ts "OutlookView.ts")
-* [Lib.ts](https://raw.githubusercontent.com/jayinsf/hamspam/blob/master/src/Lib.ts "Lib.ts")
+* [Lib.ts](https://raw.githubusercontent.com/jayinsf/hamspam/master/src/Lib.ts "Lib.ts")
 ```
 export * from './Outlook';
 export * from './OutlookView';
