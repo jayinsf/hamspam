@@ -2,7 +2,7 @@
 
 Hamspam is a cross-browser extension that injects visual feedback about spamminess of your emails into page. The name *hamspam* is a combination of two words *ham* and *spam*, where *ham* is an antonym for *spam*.
 
-<a href="https://coronamap.page"><img src="https://github.com/jayinsf/hamspam/blob/master/animation.gif" width=610></a>
+<a href="https://coronamap.page"><img src="https://github.com/jayinsf/hamspam/blob/master/animation.gif" width=800></a>
 
 ## Installation
 
