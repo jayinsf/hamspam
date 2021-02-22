@@ -1,7 +1,6 @@
 ---
 email:
   - {name: Outlook, hostname: outlook.office.com, view: OutlookView}
-  - {name: Gmail, hostname: mail.google.com, view: GmailView}
 
 sender-whitelist:
   - prospect@sfsu.edu

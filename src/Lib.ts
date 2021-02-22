@@ -1,5 +1,5 @@
 export * from './Outlook';
-export * from './Gmail';
+export * from './Email';
 
 export * from './OutlookView';
-export * from './GmailView';
+export * from './EmailView';

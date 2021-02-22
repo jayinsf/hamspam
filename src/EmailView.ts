@@ -2,25 +2,25 @@
 
 import { AbstractView } from "./AbstractView";
 
-export class GmailView extends AbstractView {
+export class EmailView extends AbstractView {
 
   constructor() {
     super();
   }
 
-  public showIsTrustedSender() : boolean {
+  public showIsTrustedSender(): boolean {
     throw new Error('Not Implemented');
   }
   
-  public showDeliveredLateNight() : boolean {
+  public showDeliveredLateNight(): boolean {
     throw new Error('Not Implemented');
   }
 
-  public showIsMaliciousLink() : boolean {
+  public showIsMaliciousLink(): boolean {
     throw new Error('Not Implemented');
   }
 
-  public showIsSuspiciousFile() : boolean {
+  public showIsSuspiciousFile(): boolean {
     throw new Error('Not Implemented');
   }
 

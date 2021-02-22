@@ -1,21 +1,27 @@
-# Hamspam <a href="https://github.com/jayinsf/hamspam" alt="Hamspam Logo"><img alt="" src="https://github.com/jayinsf/hamspam/blob/master/dist/icon.png" width="100" height="100" align="right"></a>
+# Hamspam <a href="#"><img src=".screenshot/icon.png" alt="Hamspam Logo" width=100 height=100 align="right"></a>
 
-Hamspam is a cross-browser extension that injects visual feedback about spamminess of your emails into page. The name *hamspam* is a combination of two words *ham* and *spam*, where *ham* is an antonym for *spam*.
+Hamspam is a cross-browser extension that injects visual feedback about spamminess of your emails into page. The name *hamspam* is a combination of two words _ham_ and _spam_, where _ham_ is an antonym for _spam_.
 
-<img src="https://github.com/jayinsf/hamspam/blob/master/animation.gif" width=700>
+## Preview
+
+Hamspam can scan various [checkpoints](#checkpoints "checkpoints") and display <img alt="" src=".screenshot/pass.png" width=24> Pass, <img alt="" src=".screenshot/warning.png" width=24> Warning, and <img alt="" src=".screenshot/fail.png" width=24> Fail indicators.
+
+<p align="center">
+  <img alt="" src=".screenshot/preview_1.png" width=49%> <img alt="" src=".screenshot/preview_2.png" width=49%><img alt="" src=".screenshot/preview_3.png" width=49%> <img alt="" src=".screenshot/preview_4.png" width=49%>
+</p>
 
 ## Installation
 
-Download and unzip [hamspam.zip](https://github.com/jayinsf/hamspam/archive/master.zip "Hamspam zip file")
+Download and unzip [hamspam.zip](../../archive/master.zip "Hamspam zip file")
 
-<a href="#"><img alt="Chrome Logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg" width="20"></a> Chrome:
-1. Navigate to [chrome://extensions](chrome://extensions "Chrome Extensions")
+<a href="#"><img alt="Firefox Logo" src=".screenshot/firefox_logo.svg" width=20></a> Firefox:
+1. Navigate to [about:debugging](about:debugging "Firefox Developer Tools")
+2. Click **Load Temporary Add-on**, then select dist folder
+
+<a href="#"><img alt="Chrome Logo" src=".screenshot/chrome_logo.svg" width=20></a> Chrome:
+1. Open [chrome://extensions](chrome://extensions "Chrome Extensions")
 2. Enable **Developer mode** at the top-right corner
 3. Click **Load unpacked** button, then select dist folder
-
-<a href="#"><img alt="Firefox Logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" width="20"></a> Firefox:
-1. Open [about:debugging](about:debugging "Firefox Developer Tools")
-2. Click **Load Temporary Add-on**, then select dist folder
 
 ## Getting Started
 
@@ -23,8 +29,8 @@ Download and unzip [hamspam.zip](https://github.com/jayinsf/hamspam/archive/mast
 
 * Node.js
 ```
-$ sudo apt install nodejs
-$ sudo apt install npm
+$ yum install nodejs
+$ yum install npm
 ```
 
 * Install npm packages
@@ -39,29 +45,85 @@ npm install
 
 ## API
 
-To scan emails with Hamspam on an email service, create two new classes that extend AbstractEmail and AbstractView.
+1. To use Hamspam on an email service, create two child classes extending AbstractEmail and AbstractView, respectively.
 
-### Examples
+* Class template extending AbstractEmail
 
-Microsoft Outlook:
-* AbstractEmail - [Outlook.ts](https://raw.githubusercontent.com/jayinsf/hamspam/master/src/Outlook.ts "Outlook.ts")
-* AbstractView - [OutlookView.ts](https://raw.githubusercontent.com/jayinsf/hamspam/master/src/OutlookView.ts "OutlookView.ts")
-* [Lib.ts](https://raw.githubusercontent.com/jayinsf/hamspam/master/src/Lib.ts "Lib.ts")
+```typescript
+'use strict';
+
+import { AbstractEmail } from "./AbstractEmail";
+
+export class Email extends AbstractEmail {
+  
+  constructor() {
+    super();
+  }
+
+  public getBody(): HTMLElement { throw new Error('Not Implemented'); }
+
+  public getSender(): HTMLElement { throw new Error('Not Implemented'); }
+
+  public getSenderString(): string { throw new Error('Not Implemented'); }
+  
+  public getDeliveryTime(): HTMLElement { throw new Error('Not Implemented'); }
+
+  public getDeliveryTimeString(): string { throw new Error('Not Implemented'); }
+
+  public getLink(): Array<HTMLAnchorElement> { throw new Error('Not Implemented'); }
+  
+  public getLinkString(): Array<string> { throw new Error('Not Implemented'); }
+
+  public getAttachment(): Array<HTMLElement> { throw new Error('Not Implemented'); }
+
+  public getAttachmentString(): Array<string> { throw new Error('Not Implemented'); }
+  
+  public write(parent: Node, self: Node): void { throw new Error('Not Implemented'); }
+}
 ```
-export * from './Outlook';
-export * from './OutlookView';
+
+* Class template extending AbstractView
+
+```typescript
+'use strict';
+
+import { AbstractView } from "./AbstractView";
+
+export class EmailView extends AbstractView {
+
+  constructor() {
+    super();
+  }
+
+  public showIsTrustedSender(): boolean { throw new Error('Not Implemented'); }
+  
+  public showDeliveredLateNight(): boolean { throw new Error('Not Implemented'); }
+
+  public showIsMaliciousLink(): boolean { throw new Error('Not Implemented'); }
+
+  public showIsSuspiciousFile(): boolean { throw new Error('Not Implemented'); }
+
+  public showFindTriggerWord(): boolean { throw new Error('Not Implemented'); }
+}
 ```
-* [config.yaml](https://raw.githubusercontent.com/jayinsf/hamspam/master/dist/config.yaml "config.yaml")
+
+2. Make created classes public by exporting in [Lib.ts](src/Lib.ts "Lib.ts")
+```
+export * from './Email';
+export * from './EmailView';
+```
+
+3. Add configuration in [config.yaml](dist/config.yaml "config.yaml")
 ```
 email:
   ...
-  - {name: Outlook, hostname: outlook.office.com, view: OutlookView}
+  - {name: Email, hostname: email.com, view: EmailView}
   ...
 ```
 
 ### AbstractEmail
 
-The Abstract Email class has the algorithm for spam filtering.
+Abstract Email class has algorithm for spam filtering.
 
 #### Checkpoints
 
@@ -89,36 +151,30 @@ The Abstract Email class has the algorithm for spam filtering.
 
 ### AbstractView
 
-Once scan is complete, the Abstract View class displays a blue Pass indicator, a yellow Warning indicator, or a red Fail indicator for each checkpoint. Override `getIndicator()` to use your custom indicator designs.
+Once scan is complete, the Abstract View class displays a <img alt="" src=".screenshot/pass.png" width=24> Pass, <img alt="" src=".screenshot/warning.png" width=24> Warning, or <img alt="" src=".screenshot/fail.png" width=24> Fail indicator for each checkpoint. Override `getIndicator()` to use your custom indicator designs.
 
 | Method | Returns | Description |
 |-|-|-|
-| `showIfIsTrustedSender(<HTMLElement> position, <Boolean>isTrustedSender)` | - | Display an indicator next to sender email address |
-| `showIfDeliveredLateNight(<HTMLElement> position, <Boolean>deliveredLateNight)` | - | Display an indicator next to delivery timestamp |
-| `showMaliciousLink(<HTMLElement> position, <MaliciousLinkType[]> maliciousLinkType` | - | Display indicator next to each link |
-| `showSuspiciousFile(<HTMLElement> position, <Boolean> isSuspiciousFile)` | - | Display indicator next to each attachment |
+| `showIfIsTrustedSender(<HTMLElement> position, <Boolean>isTrustedSender)` | - | Display an indicator to sender email address |
+| `showIfDeliveredLateNight(<HTMLElement> position, <Boolean>deliveredLateNight)` | - | Display an indicator to delivery timestamp |
+| `showMaliciousLink(<HTMLElement> position, <MaliciousLinkType[]> maliciousLinkType` | - | Display indicator to each link |
+| `showSuspiciousFile(<HTMLElement> position, <Boolean> isSuspiciousFile)` | - | Display indicator to each attachment |
 | `showSpamWord(<String> triggerWord)` | `<String>` | Get indicator as HTML string for a spam word  |
 | `getIndicator(<SecurityLevel> level)` | `<String>` | Get indicator as HTML string |
 | `getIndicatorClass(<SecurityLevel> level)` | `<String>` | Get design for a pass, warning or fail indicator |
 
 ### Configuration
 
-After creating child classes of AbstractEmail and AbstractView, add the child class names to `email` in [config.yaml](https://raw.githubusercontent.com/jayinsf/hamspam/master/dist/config.yaml "config.yaml")
+After creating child classes of AbstractEmail and AbstractView, add the child class names to `email` in [config.yaml](dist/config.yaml "config.yaml")
 
 | Object | Tag | Description |
 |-|-|-|
 | `email` **(required)** | `name` - child class name of AbstractEmail<br>`hostname` - the host name of email service provider<br>`view` - child class name of AbstractView | Pairs of AbstractEmail, AbstractView and host name |
 | `sender-whitelist` | Array of email addresses | List of the trusted email addresses<br>Allow regular expressions <ul><li> _e.g._ `\*@\*.sfsu.edu` will whitelist all email addresses ending with "@sfsu.edu" and "@mail.sfsu.edu"</li></ul> |
-| `late-delivery` | `from (default: 300)` - start time of late delivery hours. Email was received late if delivery time is greater than this number<br>`to (default: 1320)` - end time of late delivery hours. Email was received late if delivery time is smaller than this number | Range of late night hours<br>Each hour since midnight is 60 <ul><li>_e.g._ 0=midnight, 720=noon, 540=9am, 930=3:30pm</li></ul> |
+| `late-delivery` | `from (default: 300)` - start time of late delivery hours. Email was received late if delivery time is greater than this number<br>`to (default: 1320)` - end time of late delivery hours. Email was received late if delivery time is smaller than this number | Range of late night hours<br>Each hour since midnight is 60 <ul><li>_e.g._ 0=midnight, 540=9am, 720=noon, 930=3:30pm</li></ul> |
 | `suspicious-file-extensions` | Array of file extensions | List of file extensions |
 | `spam-words` | Array of spam words | List of spam words<br>Allow regular expressions <ul><li>_e.g._ `gift( card)?` flags "gift" and "gift card" as spam words</li></ul>Space between words matches strictly zero or more spaces <ul><li>_e.g._ `sign up` flags "sign &nbsp;up" (double spaces) and "signup" (no space) as spam word</li></ul> |
 
 ## Issues and Contributions
 
-Contributions are welcome. If you have a bug or feature request, please create an [issue](https://github.com/jayinsf/hamspam/issues "issue").
-
-See the list of [contributors](https://github.com/jayinsf/hamspam/graphs/contributors "contributors") who participated in this project.
-
-## License
-
-Hamspam is licensed under the terms of the Apache License 2.0. For more information, please refer to the [License](https://github.com/jayinsf/hamspam/blob/master/LICENSE "License").
+Contributions are welcome. If you have a bug or feature request, please create an [issue](../../issues "issue"). See the list of [contributors](../../graphs/contributors "contributors") who participated in this project.
